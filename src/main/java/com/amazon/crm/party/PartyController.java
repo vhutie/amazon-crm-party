@@ -17,6 +17,7 @@
 package com.amazon.crm.party;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -27,11 +28,16 @@ import org.keycloak.adapters.RefreshableKeycloakSecurityContext;
 import org.keycloak.representations.AccessToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+
+import com.amazon.crm.party.model.PartyInformation;
+import com.amazon.crm.party.model.PartyRepository;
 
 import io.swagger.annotations.ApiOperation;
 
@@ -41,6 +47,9 @@ public class PartyController {
 
     @Autowired
     private PartyService partyService;
+    
+    @Autowired
+    private PartyRepository partyRepository;
 
     @CrossOrigin
     @RequestMapping(method = RequestMethod.GET, value = "/amazon-crm-party", produces = "text/plain")
@@ -82,4 +91,33 @@ public class PartyController {
     public String health() {
         return "I'm ok";
     }
+    
+    
+    @CrossOrigin
+    @RequestMapping(method = RequestMethod.GET, value = "/party", produces = "application/json")
+    @ApiOperation("Returns the list of parties")
+    public List<PartyInformation> getAllParties() {
+        List<PartyInformation> partyList = partyRepository.findAllByOrderByCreationDateDesc();
+        
+        return partyList;
+    }
+    
+    @CrossOrigin
+    @RequestMapping(method = RequestMethod.GET, value = "/party/{id}", produces = "application/json")
+    @ApiOperation("Returns the party by id")
+    public PartyInformation getParty(@PathVariable("id") Long id) {
+        PartyInformation party = partyRepository.findById(id).get();
+        return party;
+    }
+    
+    @CrossOrigin
+    @RequestMapping(method = RequestMethod.POST, value = "/party", produces = "application/json")
+    @ApiOperation("Adds party information")
+    public PartyInformation addParty(@RequestBody PartyInformation partyInformation) {
+    	    partyInformation.setCreationDate(new Date());
+        PartyInformation savedParty = partyRepository.save(partyInformation);
+        return savedParty;
+    }
+    
+    
 }
