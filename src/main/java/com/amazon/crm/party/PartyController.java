@@ -37,7 +37,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.amazon.crm.party.model.PartyInformation;
-import com.amazon.crm.party.model.PartyRepository;
+import com.amazon.crm.party.repo.PartyRepository;
 
 import io.swagger.annotations.ApiOperation;
 
@@ -114,8 +114,7 @@ public class PartyController {
     @RequestMapping(method = RequestMethod.POST, value = "/party", produces = "application/json")
     @ApiOperation("Adds party information")
     public PartyInformation addParty(@RequestBody PartyInformation partyInformation) {
-    	    partyInformation.setCreationDate(new Date());
-        PartyInformation savedParty = partyRepository.save(partyInformation);
+        PartyInformation savedParty = partyRepository.saveAndFlush(partyInformation);
         return savedParty;
     }
     

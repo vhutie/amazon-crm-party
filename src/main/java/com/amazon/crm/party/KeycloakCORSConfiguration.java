@@ -19,6 +19,14 @@ public class KeycloakCORSConfiguration {
                         .allowedMethods(HttpMethod.GET.toString(), HttpMethod.POST.toString(),
                                 HttpMethod.PUT.toString(), HttpMethod.DELETE.toString(), HttpMethod.OPTIONS.toString())
                         .allowedOrigins("*");
+                registry.addMapping("/amazon-individual-api/**")
+                .allowedMethods(HttpMethod.GET.toString(), HttpMethod.POST.toString(),
+                        HttpMethod.PUT.toString(), HttpMethod.DELETE.toString(), HttpMethod.OPTIONS.toString())
+                .allowedOrigins("*");
+                registry.addMapping("/amazon-organization-api/**")
+                .allowedMethods(HttpMethod.GET.toString(), HttpMethod.POST.toString(),
+                        HttpMethod.PUT.toString(), HttpMethod.DELETE.toString(), HttpMethod.OPTIONS.toString())
+                .allowedOrigins("*");
             }
         };
     }
