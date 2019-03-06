@@ -88,7 +88,7 @@ public class OrganizationController {
     @RequestMapping(method = RequestMethod.DELETE, value = "/party-management/organization/{organizationId}", produces = "application/json")
     @ApiOperation("Remove the Organization by id")
     public boolean removeOrganization(@PathVariable("organizationId") Long id) {
-    		organizationRepository.deleted(id);
+    		organizationRepository.findById(id);
         return true;
     }
     

@@ -11,6 +11,6 @@ public interface OrganizationRepository  extends JpaRepository<Organization, Lon
 	
 	public List<Organization> findAllByOrderByOrganizationNameAsc();
 	public Optional<Organization> findById(Long id);
-	public void deleted(Long id);
+	//public void deleted(Long id);
 
 }
