@@ -84,10 +84,10 @@ public class IndividualController {
     
     @CrossOrigin
     @RequestMapping(method = RequestMethod.DELETE, value = "/party-management/individual/{individualId}", produces = "application/json")
-    @ApiOperation("Returns the individual by id")
-    public Individual removeIndividual(@PathVariable("individualId") Long id) {
-    		Individual individual = individualRepository.findById(id).get();
-        return individual;
+    @ApiOperation("Removes the individual by id")
+    public Boolean removeIndividual(@PathVariable("individualId") Long id) {
+    		individualRepository.delete(id);
+        return true;
     }
     
     

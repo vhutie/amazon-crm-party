@@ -11,5 +11,5 @@ public interface IndividualRepository  extends JpaRepository<Individual, Long>{
 	
 	public List<Individual> findAllByOrderByFullNameAsc();
 	public Optional<Individual> findById(Long id);
-
+	public void delete(Long id);
 }
